@@ -3,11 +3,19 @@
  * @param {number[]} nums2
  * @return {number}
  */
-var findMedianSortedArrays = function(nums1, nums2) {
-    const array = [...nums1, ...nums2].sort((a,b) => a-b);
-    let left=0;
-    let right=array.length-1
-    let mid=Math.floor((left+right)/2)
-    
-    return array.length % 2 === 0 ? (array[mid] + array[mid+1]) / 2  : array[mid];
-};
+const findMedianSortedArrays = (nums1, nums2) => {
+    let merged = []
+    if (!nums1) merged = nums2
+    if (!nums2) merged = nums1
+    if (nums1 && nums2) merged = nums1.concat(nums2)
+    merged.sort(function(a, b){return a-b})
+    const length = merged.length
+    if(length % 2 != 0) {
+        let i = length / 2
+        return merged[Math.floor(i)]
+    }else{
+        let i = Math.floor(length / 2)
+        let j = i - 1
+        return (merged[i] + merged[j]) / 2
+    }
+}
